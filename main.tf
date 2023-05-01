@@ -1,16 +1,11 @@
-provider "aws" {
-  region = "eu-north-1"
-
-}
-
 resource "aws_instance" "jenkins_instance" {
   ami                    = var.ami
   instance_type          = var.instance_type
-  subnet_id = aws_subnet.jenkins_public_subnet.id
+  subnet_id              = aws_subnet.jenkins_public_subnet.id
   vpc_security_group_ids = [aws_security_group.jenkins-sg.id]
-  key_name = var.key_name
+  key_name               = var.key_name
   user_data              = file("install_script_jenkins_instance.sh")
-  iam_instance_profile = aws_iam_instance_profile.s3_jenkins_instance_profile.name # access to s3 bucket
+  iam_instance_profile   = aws_iam_instance_profile.s3_jenkins_instance_profile.name # access to s3 bucket
 
   tags = {
     Name = "jenkins-EC2"
@@ -20,9 +15,9 @@ resource "aws_instance" "jenkins_instance" {
 resource "aws_instance" "production_1_instance" {
   ami                    = var.ami
   instance_type          = var.instance_type
-  subnet_id = aws_subnet.ec2_1_public_subnet.id
+  subnet_id              = aws_subnet.ec2_1_public_subnet.id
   vpc_security_group_ids = [aws_security_group.production-instance-sg.id]
-  key_name = var.key_name
+  key_name               = var.key_name
   user_data              = file("install_script_deployment_instance.sh")
   tags = {
     Name = "Production instance 1"
@@ -32,9 +27,9 @@ resource "aws_instance" "production_1_instance" {
 resource "aws_instance" "production_2_instance" {
   ami                    = var.ami
   instance_type          = var.instance_type
-  subnet_id = aws_subnet.ec2_2_public_subnet.id
+  subnet_id              = aws_subnet.ec2_2_public_subnet.id
   vpc_security_group_ids = [aws_security_group.production-instance-sg.id]
-  key_name = var.key_name
+  key_name               = var.key_name
   user_data              = file("install_script_deployment_instance.sh")
   tags = {
     Name = "Production instance 2"
@@ -51,15 +46,15 @@ resource "aws_s3_bucket" "jenkins_bucket" {
 }
 
 resource "aws_db_subnet_group" "database_subnet" {
-  name = "db subnet"
-  subnet_ids = [ aws_subnet.database_private_subnet.id, aws_subnet.database_read_replica_private_subnet.id ]
+  name       = "db subnet"
+  subnet_ids = [aws_subnet.database_private_subnet.id, aws_subnet.database_read_replica_private_subnet.id]
 }
 
 resource "aws_db_instance" "instance_db1" {
   identifier             = "mysql-db1"
-  db_name                   = "mydb"
+  db_name                = "mydb"
   allocated_storage      = 10
-  availability_zone = var.availability_zone[2]
+  availability_zone      = var.availability_zone[2]
   db_subnet_group_name   = aws_db_subnet_group.database_subnet.id
   engine                 = "mysql"
   engine_version         = "8.0.31"
@@ -73,9 +68,9 @@ resource "aws_db_instance" "instance_db1" {
 
 resource "aws_db_instance" "instance_db2" {
   identifier             = "mysql-db2"
-  db_name                   = "mydb"
+  db_name                = "mydb"
   allocated_storage      = 10
-  availability_zone = var.availability_zone[1]
+  availability_zone      = var.availability_zone[1]
   db_subnet_group_name   = aws_db_subnet_group.database_subnet.id
   engine                 = "mysql"
   engine_version         = "8.0.31"

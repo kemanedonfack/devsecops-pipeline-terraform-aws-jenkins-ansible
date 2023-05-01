@@ -14,7 +14,7 @@ resource "aws_iam_policy" "s3_jenkins_policy" {
           "s3:GetObject",
           "s3:PutObject"
         ]
-        Resource =  "*"
+        Resource = "*"
       }
     ]
   })

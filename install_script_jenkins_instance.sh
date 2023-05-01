@@ -37,6 +37,7 @@ sudo apt-get install maven -y
 
 
 #run sonarqube server on docker
+docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest
 
 #install aws cli
 sudo apt install awscli -y

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Jenkins installation
+sudo hostnamectl set-hostname jenkins
 sudo apt-get upgrade -y
 sudo apt-get update
 sudo apt install openjdk-11-jre -y

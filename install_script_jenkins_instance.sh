@@ -27,6 +27,7 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+sudo apt  install docker-compose -y
 sudo systemctl enable docker
 sudo systemctl start docker
 #add jenkins to docker group
@@ -34,10 +35,6 @@ sudo usermod -a -G docker jenkins
 
 #install maven
 sudo apt-get install maven -y 
-
-
-#run sonarqube server on docker
-docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest
 
 #install aws cli
 sudo apt install awscli -y

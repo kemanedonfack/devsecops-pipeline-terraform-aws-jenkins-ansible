@@ -12,7 +12,7 @@ variable "inbound_port_production_ec2" {
 
 variable "instance_type" {
   type    = string
-  default = "t3.micro"
+  default = "t3.medium"
 }
 
 variable "ami" {

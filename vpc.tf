@@ -18,7 +18,7 @@ resource "aws_internet_gateway" "devops_pipeline_igw" {
 }
 
 #jenkins node public subnet
-resource "aws_subnet" "jenkins_public_subnet" {
+resource "aws_subnet" "public_subnet" {
   vpc_id                  = aws_vpc.infrastructure_vpc.id
   cidr_block              = var.subnet_cidrs[0]
   map_public_ip_on_launch = "true" //it makes this a public subnet
@@ -28,16 +28,6 @@ resource "aws_subnet" "jenkins_public_subnet" {
   }
 }
 
-#first ec2 node public subnet
-resource "aws_subnet" "ec2_1_public_subnet" {
-  vpc_id                  = aws_vpc.infrastructure_vpc.id
-  cidr_block              = var.subnet_cidrs[1]
-  map_public_ip_on_launch = "true" //it makes this a public subnet
-  availability_zone       = var.availability_zone[1]
-  tags = {
-    Name = "first ec2 public subnet"
-  }
-}
 
 #database read replica private subnet
 resource "aws_subnet" "database_read_replica_private_subnet" {
@@ -47,17 +37,6 @@ resource "aws_subnet" "database_read_replica_private_subnet" {
   availability_zone       = var.availability_zone[1]
   tags = {
     Name = "database read replica private subnet"
-  }
-}
-
-#second ec2 node public subnet
-resource "aws_subnet" "ec2_2_public_subnet" {
-  vpc_id                  = aws_vpc.infrastructure_vpc.id
-  cidr_block              = var.subnet_cidrs[2]
-  map_public_ip_on_launch = "true" //it makes this a public subnet
-  availability_zone       = var.availability_zone[2]
-  tags = {
-    Name = "second ec2 public subnet"
   }
 }
 

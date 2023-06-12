@@ -30,14 +30,15 @@ resource "aws_security_group" "sonarqube-sg" {
   description = "security  group for sonarqube server"
   vpc_id      = aws_vpc.infrastructure_vpc.id
 
-  ingress {
-    description     = "Allow access to sonarqube server"
-    from_port       = 9000
-    to_port         = 9000
-    protocol        = "tcp"
-    security_groups = [aws_security_group.jenkins-sg.id]
+  dynamic "ingress" {
+    for_each = var.inbound_port_jenkins_sonarqube
+    content {
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
   }
-
   egress {
     from_port   = 0
     to_port     = 0

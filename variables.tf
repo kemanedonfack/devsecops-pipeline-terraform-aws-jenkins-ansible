@@ -4,6 +4,12 @@ variable "inbound_port_jenkins_ec2" {
   description = "inbound port allow on jenkins node"
 }
 
+variable "inbound_port_jenkins_sonarqube" {
+  type        = list(any)
+  default     = [22, 9000]
+  description = "inbound port allow on sonarqube instance"
+}
+
 variable "inbound_port_production_ec2" {
   type        = list(any)
   default     = [22, 8080, 80]

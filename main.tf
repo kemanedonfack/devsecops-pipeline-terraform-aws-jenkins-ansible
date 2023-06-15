@@ -7,6 +7,12 @@ resource "aws_instance" "jenkins_instance" {
   user_data              = file("install_script_jenkins_instance.sh")
   iam_instance_profile   = aws_iam_instance_profile.s3_jenkins_instance_profile.name # access to s3 bucket
 
+  root_block_device {
+    volume_size           = 30
+    volume_type           = "gp3"
+    delete_on_termination = true
+  }
+
   tags = {
     Name = "jenkins"
   }

@@ -1,6 +1,6 @@
 variable "inbound_port_jenkins_ec2" {
   type        = list(any)
-  default     = [22, 8080, 9000]
+  default     = [22, 8080, 9000, 8090]
   description = "inbound port allow on jenkins node"
 }
 

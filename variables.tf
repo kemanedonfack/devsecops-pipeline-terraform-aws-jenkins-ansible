@@ -51,3 +51,18 @@ variable "target_application_port" {
   type    = string
   default = "80"
 }
+
+variable "db_name" {
+  type    = string
+  default = "wordpressdb"
+}
+
+variable "db_user" {
+  type    = string
+  default = "admin"
+}
+
+variable "db_password" {
+  type    = string
+  default = "Wordpress-AWS2Tier"
+}

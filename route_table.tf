@@ -16,3 +16,14 @@ resource "aws_route_table_association" "route-jenkins-subnet-to-igw" {
   route_table_id = aws_route_table.infrastructure_route_table.id
 }
 
+# attach jenkins subnet to an internet gateway
+resource "aws_route_table_association" "route-ec2-1-subnet-to-igw" {
+  subnet_id      = aws_subnet.public_subnet_1_ecs.id
+  route_table_id = aws_route_table.infrastructure_route_table.id
+}
+
+# attach jenkins subnet to an internet gateway
+resource "aws_route_table_association" "route-ec2-2-subnet-to-igw" {
+  subnet_id      = aws_subnet.public_subnet_2_ecs.id
+  route_table_id = aws_route_table.infrastructure_route_table.id
+}

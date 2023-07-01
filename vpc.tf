@@ -28,6 +28,25 @@ resource "aws_subnet" "public_subnet" {
   }
 }
 
+resource "aws_subnet" "public_subnet_1_ecs" {
+  vpc_id                  = aws_vpc.infrastructure_vpc.id
+  cidr_block              = var.subnet_cidrs[1]
+  map_public_ip_on_launch = "true" //it makes this a public subnet
+  availability_zone       = var.availability_zone[1]
+  tags = {
+    Name = "ECS public subnet"
+  }
+}
+resource "aws_subnet" "public_subnet_2_ecs" {
+  vpc_id                  = aws_vpc.infrastructure_vpc.id
+  cidr_block              = var.subnet_cidrs[2]
+  map_public_ip_on_launch = "true" //it makes this a public subnet
+  availability_zone       = var.availability_zone[2]
+  tags = {
+    Name = "ECS public subnet"
+  }
+}
+
 
 #database read replica private subnet
 resource "aws_subnet" "database_read_replica_private_subnet" {

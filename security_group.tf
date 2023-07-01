@@ -49,22 +49,69 @@ resource "aws_security_group" "sonarqube-sg" {
 
 
 #Create a security  group for database to allow traffic on port 3306 and from ec2 production security group
-# resource "aws_security_group" "database-sg" {
-#   name        = "database-sg"
-#   description = "security  group for database to allow traffic on port 3306 and from ec2 production security group"
-#   vpc_id      = aws_vpc.infrastructure_vpc.id
+resource "aws_security_group" "elb-sg" {
+  name        = "elb-sg"
+  description = "security  group for database to allow traffic on port 3306 and from ec2 production security group"
+  vpc_id      = aws_vpc.infrastructure_vpc.id
 
-#   ingress {
-#     description     = "Allow traffic from port 3306 and from ec2 production security group"
-#     from_port       = 3306
-#     to_port         = 3306
-#     protocol        = "tcp"
-#   }
+  ingress {
+    description = "Allow traffic from port 3306 and from ec2 production security group"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+  }
 
-#   egress {
-#     from_port   = 0
-#     to_port     = 0
-#     protocol    = -1
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
-# }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "service_security_group" {
+  name   = "ecs-sg"
+  vpc_id = aws_vpc.infrastructure_vpc.id
+  ingress {
+    from_port = 80
+    to_port   = 80
+    protocol  = "tcp"
+    # Only allowing traffic in from the load balancer security group
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 8090
+    to_port   = 8090
+    protocol  = "tcp"
+    # Only allowing traffic in from the load balancer security group
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "database-sg" {
+  name        = "database-sg"
+  description = "security  group for database to allow traffic on port 3306 and from ec2 production security group"
+  vpc_id      = aws_vpc.infrastructure_vpc.id
+
+  ingress {
+    description = "Allow traffic from port 3306 and from ec2 production security group"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}

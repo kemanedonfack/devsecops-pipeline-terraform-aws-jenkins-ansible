@@ -29,7 +29,7 @@ resource "aws_lb_target_group" "alb_target_group" {
     unhealthy_threshold = 5
     interval            = 30
     matcher             = "200"
-    path                = "/"
+    path                = "/login"
     port                = "traffic-port"
     protocol            = "HTTP"
     timeout             = 10

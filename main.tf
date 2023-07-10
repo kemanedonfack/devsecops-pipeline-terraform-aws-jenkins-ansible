@@ -18,18 +18,18 @@ resource "aws_instance" "jenkins_instance" {
   }
 }
 
-# resource "aws_instance" "sonarqube_server" {
-#   ami                    = var.ami
-#   instance_type          = var.instance_type
-#   subnet_id              = aws_subnet.public_subnet.id
-#   vpc_security_group_ids = [aws_security_group.sonarqube-sg.id]
-#   key_name               = var.key_name
-#   user_data              = file("install_script_sonarqube.sh")
+resource "aws_instance" "sonarqube_server" {
+  ami                    = var.ami
+  instance_type          = var.instance_type
+  subnet_id              = aws_subnet.public_subnet.id
+  vpc_security_group_ids = [aws_security_group.sonarqube-sg.id]
+  key_name               = var.key_name
+  user_data              = file("install_script_sonarqube.sh")
 
-#   tags = {
-#     Name = "Sonarqube"
-#   }
-# }
+  tags = {
+    Name = "Sonarqube"
+  }
+}
 
 #Create S3 bucket for your application Artifacts not open to the public
 resource "aws_s3_bucket" "jenkins_bucket" {

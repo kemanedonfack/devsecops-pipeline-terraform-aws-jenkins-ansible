@@ -6,6 +6,11 @@ resource "aws_iam_policy" "ec2_jenkins_policy" {
     Statement = [
       {
         Effect   = "Allow",
+        Action   = "ecs:*",
+        Resource = "*"
+      },
+      {
+        Effect   = "Allow",
         Action   = "ecr:*",
         Resource = "*"
       },

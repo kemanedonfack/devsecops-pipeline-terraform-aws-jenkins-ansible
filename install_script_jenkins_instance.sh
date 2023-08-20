@@ -28,6 +28,8 @@ sudo apt install docker-compose -y
 sudo systemctl enable docker
 sudo systemctl start docker
 sudo usermod -aG docker jenkins
+sudo systemctl stop jenkins
+sudo systemctl start jenkins
 
 #install maven
 sudo apt-get install maven -y 
